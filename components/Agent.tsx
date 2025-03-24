@@ -5,14 +5,14 @@ import React, { useState } from "react";
 
 enum CallStatus {
   INACTIVE = "INACTIVE",
-  CONNNECTING = "CONNECTING",
+  CONNECTING = "CONNECTING",
   ACTIVE = "ACTIVE",
   FINISHED = "FINISHED",
 }
 
 const Agent = ({ userName }: AgentProps) => {
   const isSpeaking = true;
-  const callStatus = CallStatus.FINISHED;
+  const [callStatus, setCallStatus] = useState<CallStatus>(CallStatus.FINISHED);
   const messages = [
     "What's your name?",
     "My name is John Doe, nice to meet you!",
@@ -67,22 +67,31 @@ const Agent = ({ userName }: AgentProps) => {
       )}
 
       <div className="w-full flex justify-center">
-        {callStatus !== "ACTIVE" ? (
-          <button className="relative btn-call">
+        {callStatus !== CallStatus.ACTIVE ? (
+          <button
+            className="relative btn-call"
+            onClick={() => setCallStatus(CallStatus.CONNECTING)}
+          >
             <span
               className={cn(
-                'absolute animate-ping rounded-full opacity-75, callStatus !== "CONNECTING' &
-                  "hidden"
+                "absolute animate-ping rounded-full opacity-75",
+                callStatus !== CallStatus.CONNECTING && "hidden"
               )}
             />
             <span>
-              {callStatus === "INACTIVE" || callStatus === "FINISHED"
+              {callStatus === CallStatus.INACTIVE ||
+              callStatus === CallStatus.FINISHED
                 ? "Call"
                 : "..."}
             </span>
           </button>
         ) : (
-          <button className="btn-disconnect">End</button>
+          <button
+            className="btn-disconnect"
+            onClick={() => setCallStatus(CallStatus.FINISHED)}
+          >
+            End
+          </button>
         )}
       </div>
     </>
