@@ -28,6 +28,8 @@ export async function POST(request: Request) {
     `,
     });
 
+    console.log(questions);
+
     const interview = {
       role,
       type,
