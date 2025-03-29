@@ -10,7 +10,7 @@ const page = async () => {
       <h3>Interview Generation</h3>
       <Agent
         userName={user?.name as string}
-        userId={user?.id as string}
+        userId={user?.id}
         type="generate"
       />
     </>
